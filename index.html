@@ -7,6 +7,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="index.css" rel="stylesheet" >
     </head>
     <body>
         <!--[if lte IE 9]>
@@ -17,17 +18,16 @@
       <div class="jumbotron">
           <div class="container">
         <h1>500 основных чувашских корней</h1>
-        <p>This is a template for a simple marketing or informational website. 
-            It includes a large callout called the hero unit and three supporting pieces 
-            of content. Use it as a starting point to create something more unique.</p>
-        <input type="text" value="filtering will be implemented" class="form-control">
+        <div id="debug-output"></div>
+        <p>Алпарух, кунта 500 тӗп тымар ҫинчен кунта ҫырса пӗлтер.</p>
+        <input id="filter" type="text" placeholder="filtering is in beta" class="form-control">
         </div>
       </div>
 
       <!-- Example row of columns -->
     <div class="container">
  
-<div class='row entry'><div class='col-md-2 title'>ав</div><div class='col-md-2 sound'>[ав]</div><div class='col-md-3 meaning'>гнуть</div><div class='col-md-5 desc'><b><u>ав</u>*ăн</b> — гнуться; <b><u>ав</u>*ăн*мас*ть</b> — не гнется; <b><u>ав</u>*ăн</b> — гнуться, сгибаться, изгибаться, искривляться; <b><u>ав</u>*ăн*чăк</b> — изгиб, искривление, кривизна, извилина; изогнутый, загнутый, искривленный, кривой; <b>пурăн*</b>ăç <b>ăна апла та, </b>капла<b> та <u>ав</u>*са пăх*нă, </b>пур*пĕр<b>*ех хуç*ай*ман</b> — жизнь его гнула и так и эдак, но все же не сломала</div></div>
+<div class='row entry' id="ав"><div class='col-md-2 title'>ав</div><div class='col-md-2 sound'>[ав]</div><div class='col-md-3 meaning'>гнуть</div><div class='col-md-5 desc'><b><u>ав</u>*ăн</b> — гнуться; <b><u>ав</u>*ăн*мас*ть</b> — не гнется; <b><u>ав</u>*ăн</b> — гнуться, сгибаться, изгибаться, искривляться; <b><u>ав</u>*ăн*чăк</b> — изгиб, искривление, кривизна, извилина; изогнутый, загнутый, искривленный, кривой; <b>пурăн*</b>ăç <b>ăна апла та, </b>капла<b> та <u>ав</u>*са пăх*нă, </b>пур*пĕр<b>*ех хуç*ай*ман</b> — жизнь его гнула и так и эдак, но все же не сломала</div></div>
 <div class='row entry'><div class='col-md-2 title'>авал</div><div class='col-md-2 sound'>[авал]</div><div class='col-md-3 meaning'>в старину, давным-давно</div><div class='col-md-5 desc'>ĕлĕк-авал пĕр çĕр*шыв*ра  патша пурăн*нă те*т — давным-давно в одной стране жил-был царь; вĕсем авал*ах пуян пурăн*нă —они издавна жили богато; авал*тан — издревле, с давних пор, исстари; авал*хи — древний, старинный </div></div>
 <div class='row entry'><div class='col-md-2 title'>аван</div><div class='col-md-2 sound'>[аван]</div><div class='col-md-3 meaning'>хороший, прекрасный, уместный, хорошо, прекрасно; привет!</div><div class='col-md-5 desc'><b><u>аван</u>*-и?</b> — привет!;  <b><u>аван</u> мар пек туй*ăн*ать</b> — кажется, что неудобно; <b><u>аван</u>*ах</b> <b>пурăн*ат*п*ăр</b> — хорошо живем; <b><u>аван</u></b> <b>мар</b> — нехорошо; <b>вăл</b> <b><u>аван</u></b> <b>вĕрен*ет</b> — он (она) хорошо учится</div></div>
 <div class='row entry'><div class='col-md-2 title'>авăн</div><div class='col-md-2 sound'>[авън]</div><div class='col-md-3 meaning'>сентябрь</div><div class='col-md-5 desc'><b><u>авăн</u> уйăх*ĕ*нче</b> — в сентябре; <b><u>авăн</u> уйăх*ĕ*ччен</b> — до сентября; <b><u>авăн</u> ирт*сен</b> — после сентября; <b><u>авăн</u>*ăн пĕрре*мĕш*ĕ*нче</b> — первого сентября</div></div>
@@ -554,6 +554,7 @@
       </footer>
 
 
-        <script src="https://code.jquery.com/jquery-latest.min.js" async defer></script>
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="index.js"></script>
     </body>
 </html>
