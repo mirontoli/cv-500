@@ -1,6 +1,18 @@
 var cv500 = (function(){
     var entries, filterInput, filterText, output;
     var notMatchingClass = 'not-matching';
+    var urlParams;
+    (function () {
+        var match,
+            pl     = /\+/g,  // Regex for replacing addition symbol with a space
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            query  = window.location.search.substring(1);
+
+        urlParams = {};
+        while (match = search.exec(query))
+        urlParams[decode(match[1])] = decode(match[2]);
+    })();
     var simplify = function(text) {
         //todo: tolowercase
         return text
@@ -31,6 +43,7 @@ var cv500 = (function(){
             entry = $(element);
             showOrHide(entry, currentFilterText);
         });
+        window.history.pushState('bajsa', 'Title', '?filter=' + currentFilterText);
     };
     var onFilterInputChange = function() {
         filterInput = filterInput || $('#filter');
@@ -44,6 +57,12 @@ var cv500 = (function(){
         filterInput.on({
             keyup: onFilterInputChange
         });
+        var dirtyFilter = urlParams['filter'];
+        if (dirtyFilter) {
+            filterText = simplify(dirtyFilter);
+            filterInput.val(filterText);
+            triggerFiltering(filterText);
+        }
     };
     //saves jQuery Data object in memory for faster filtering
     var attachData = function(entry) {
@@ -57,7 +76,6 @@ var cv500 = (function(){
         entries.each(function(index, element){
             attachData($(element));
         });  
-        filter = "авӑнмасть"
         var end = new Date().getTime();
         var time = end - start;
         print("ready! It took " + time + ' ms to attach data to all rows. ');
