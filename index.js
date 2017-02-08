@@ -43,7 +43,6 @@ var cv500 = (function(){
             entry = $(element);
             showOrHide(entry, currentFilterText);
         });
-        debugger
         var filterString = currentFilterText ? '?filter=' + currentFilterText : ''
         var urlSearchAndHash = filterString + window.location.hash;
         window.history.pushState('bajsa', 'Title', urlSearchAndHash);
