@@ -72,7 +72,8 @@ var cv500 = (function(){
     var setupSelection = function() {
         var selectedClass = 'selected';
         wordList = wordList || $('#word-list');
-        $(document.location.hash).addClass(selectedClass);
+        var hash = decodeURIComponent(document.location.hash);
+        $(hash).addClass(selectedClass);
         wordList.on('click', '.entry', function(e){
             var elem = $(this);
             //if the same is clicked, unselect
