@@ -14,12 +14,15 @@ var cv500 = (function(){
         urlParams[decode(match[1])] = decode(match[2]);
     })();
     var simplify = function(text) {
-        //todo: tolowercase
-        return text
+        //if empty or null, just return empty string
+        return !text ? '' : text
+                .toLowerCase()
                 .replace(/[\[\]\*]/g, '')
                 .replace(/[\n,;\-\—]/g, ' ')
                 .replace(/[ӑă]/gi, 'а')
-                .replace(/ӗĕ/gi, 'е');
+                .replace(/ӗĕ/gi, 'е')
+                .replace(/ҫç/gi, 'с')
+                .replace(/ӳÿ/gi, 'у');
     };
     var print = function(text) {
         output = output || $('#debug-output');
