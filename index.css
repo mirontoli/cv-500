@@ -1,3 +1,29 @@
 .not-matching {
     display: none;
 }
+.entry {
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+    margin: 0 0 5px 0;
+}
+.selected {
+    font-size: 1.2em;
+    background: rgba(255,255,0,.125);
+    border-width: 3px;
+    box-shadow: 5px 5px yellow;
+}
+.title {
+    font-weight: bold;
+}
+.sound {
+    color: gray;
+}
+.sound:before {
+    content: '\1F4AC\0020'
+}
+.meaning {
+    font-size: 1em;
+}
+.desc {
+    font-size: 1em;
+}

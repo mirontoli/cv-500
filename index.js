@@ -1,5 +1,5 @@
 var cv500 = (function(){
-    var entries, filterInput, filterText, output;
+    var entries, filterInput, wordList, filterText, output;
     var notMatchingClass = 'not-matching';
     var urlParams;
     (function () {
@@ -66,6 +66,20 @@ var cv500 = (function(){
             triggerFiltering(filterText);
         }
     };
+    var setupSelection = function() {
+        var selectedClass = 'selected';
+        wordList = wordList || $('#word-list');
+        $(document.location.hash).addClass(selectedClass);
+        wordList.on('click', '.entry', function(elem){
+            var elem = $(this);
+            // do it only if a new element has been selected
+            if (!elem.hasClass(selectedClass)) {
+                //clear selection
+                wordList.find('.'+selectedClass).removeClass(selectedClass);
+                $(this).addClass(selectedClass);
+            }
+        });
+    };
     //saves jQuery Data object in memory for faster filtering
     var attachData = function(entry) {
         var text = entry.text();
@@ -82,6 +96,7 @@ var cv500 = (function(){
         var time = end - start;
         print("ready! It took " + time + ' ms to attach data to all rows. ');
         setupFiltering();
+        setupSelection();
     };
     return {onReady: onReady};
 })();
