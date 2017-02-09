@@ -16,7 +16,7 @@ Every row is a div with class row.
 |B     |sound  |Pronounciation, Russian based simplified notation|   |
 |C     |meaning|Translation into Russian|   |
 |D     |desc   |Examples and Description   |   |
-|D     |row    |Row output in html|=SAMMANFOGA("&lt;div class='row entry' id='";A1;"'&gt;";"&lt;div class='col-md-3'&gt;&lt;div class='title'&gt;&lt;a href='#";A1;"'&gt;";A1;"&lt;/a&gt;&lt;/div&gt;&lt;div class='sound'&gt;";B1;"&lt;/div&gt;&lt;div class='meaning'&gt;";C2;"&lt;/div&gt;&lt;/div&gt;&lt;div class='col-md-9 desc'&gt;";D1;"&lt;/div&gt;&lt;/div&gt;")|
+|D     |row    |Row output in html|=SAMMANFOGA("&lt;div class='row entry' id='";A1;"'&gt;";"&lt;div class='col-md-3'&gt;&lt;div class='title'&gt;&lt;a href='#";A1;"'&gt;";A1;"&lt;/a&gt;&lt;/div&gt;&lt;div class='sound'&gt;";B1;"&lt;/div&gt;&lt;div class='meaning'&gt;";C1;"&lt;/div&gt;&lt;/div&gt;&lt;div class='col-md-9 desc'&gt;";D1;"&lt;/div&gt;&lt;/div&gt;")|
 
 
 The formula was: SAMMANFOGA("&lt;div class='row entry'&gt;";"&lt;div class='col-md-2 title'&gt;";A1;"&lt;/div&gt;&lt;div class='col-md-2 sound'&gt;";B1;"&lt;/div&gt;&lt;div class='col-md-3 meaning'&gt;";C2;"&lt;/div&gt;&lt;div class='col-md-5 desc'&gt;";D1;"&lt;/div&gt;&lt;/div&gt;") 
