@@ -14,15 +14,21 @@
 }
 .title {
     font-weight: bold;
+    display: inline-block;
+    min-width: 20%;
 }
 .sound {
     color: gray;
+    display: inline-block;
+    min-width: 30%;
 }
 .sound:before {
-    content: '\1F4AC\0020'
+    content: '\1F4AC\0020';
+    white-space: nowrap;
 }
 .meaning {
-    font-size: 1em;
+    font-style: italic;
+    display: inline-block;
 }
 .desc {
     font-size: 1em;
