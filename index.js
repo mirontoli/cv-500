@@ -51,7 +51,7 @@ var cv500 = (function(){
         filterInput = filterInput || $('#filter');
         var dirtyFilter = filterInput.val();
         filterText = simplify(dirtyFilter);
-        console.log('you are typing ' + filterText);
+        //console.log('you are typing ' + filterText);
         triggerFiltering(filterText);
     };
     var setupFiltering = function () {
@@ -70,10 +70,18 @@ var cv500 = (function(){
         var selectedClass = 'selected';
         wordList = wordList || $('#word-list');
         $(document.location.hash).addClass(selectedClass);
-        wordList.on('click', '.entry', function(elem){
+        wordList.on('click', '.entry', function(e){
             var elem = $(this);
-            // do it only if a new element has been selected
-            if (!elem.hasClass(selectedClass)) {
+            //if the same is clicked, unselect
+            if (elem.hasClass(selectedClass)) {
+                elem.removeClass(selectedClass);
+                var uri = window.location.toString();
+                if (uri.indexOf("#") > 0) {
+                    var clean_uri = uri.substring(0, uri.indexOf("#"));
+                    window.history.replaceState({}, document.title, clean_uri);
+                }
+                e.preventDefault();
+            } else { //if other clicked, switch selection
                 //clear selection
                 wordList.find('.'+selectedClass).removeClass(selectedClass);
                 $(this).addClass(selectedClass);
