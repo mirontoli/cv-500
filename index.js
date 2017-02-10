@@ -75,21 +75,28 @@ var cv500 = (function(){
         var hash = decodeURIComponent(document.location.hash);
         $(hash).addClass(selectedClass);
         wordList.on('click', '.entry', function(e){
-            var elem = $(this);
+            var elem = $(this),
+                word = this.id,
+                uri = window.location.toString(),
+                clean_uri = uri.substring(0, uri.indexOf("#")),
+                new_uri;
+            
             //if the same is clicked, unselect
             if (elem.hasClass(selectedClass)) {
                 elem.removeClass(selectedClass);
-                var uri = window.location.toString();
-                if (uri.indexOf("#") > 0) {
-                    var clean_uri = uri.substring(0, uri.indexOf("#"));
+                //uri.indexOf("#") > 0
+                if (uri !== clean_uri) {
                     window.history.replaceState({}, document.title, clean_uri);
-                }
-                e.preventDefault();
+                }                
             } else { //if other clicked, switch selection
                 //clear selection
                 wordList.find('.'+selectedClass).removeClass(selectedClass);
                 $(this).addClass(selectedClass);
+                new_uri = clean_uri + '#' + word;
+                window.history.replaceState({}, document.title, new_uri);
             }
+            //prevent jumping (autoscrolling)
+            e.preventDefault();
         });
     };
     //saves jQuery Data object in memory for faster filtering
