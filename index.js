@@ -46,9 +46,15 @@ var cv500 = (function(){
             entry = $(element);
             showOrHide(entry, currentFilterText);
         });
-        var filterString = currentFilterText ? '?filter=' + currentFilterText : ''
-        var urlSearchAndHash = filterString + window.location.hash;
-        window.history.pushState('bajsa', 'Title', urlSearchAndHash);
+        var new_uri;
+        if(!currentFilterText) {
+            new_uri = document.location.href.toString().replace(document.location.search, '');
+            window.history.pushState({}, document.title, new_uri);
+        } else {
+            var filterString = '?filter=' + currentFilterText;
+            var urlSearchAndHash = filterString + window.location.hash;
+            window.history.pushState({}, document.title, urlSearchAndHash);
+        }
     };
     var onFilterInputChange = function() {
         filterInput = filterInput || $('#filter');
