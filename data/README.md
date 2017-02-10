@@ -22,4 +22,4 @@ Every row is a div with class row.
 The formula was: SAMMANFOGA("&lt;div class='row entry'&gt;";"&lt;div class='col-md-2 title'&gt;";A1;"&lt;/div&gt;&lt;div class='col-md-2 sound'&gt;";B1;"&lt;/div&gt;&lt;div class='col-md-3 meaning'&gt;";C2;"&lt;/div&gt;&lt;div class='col-md-5 desc'&gt;";D1;"&lt;/div&gt;&lt;/div&gt;") 
 
 # Data Renewal
-When the source is updated, make the step again as described above.
+When the source is updated, make the step again as described above. In the end, find and replace all latin diacritis to their Cyrillic counterparts (ӑӗҫӳ).
