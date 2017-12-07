@@ -1,0 +1,11 @@
+{
+  "name": "text-parser-to-json",
+  "version": "1.0.0",
+  "description": "",
+  "main": "parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evgeny Belkin <sunafajro@gmail.com>",
+  "license": "ISC"
+}
