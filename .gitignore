@@ -4,10 +4,10 @@
 /ReactApp/node_modules
 
 # testing
-/ReactApp//coverage
+/ReactApp/coverage
 
 # production
-/ReactApp//build
+/ReactApp/build
 
 # misc
 /ReactApp/.DS_Store
