@@ -82,7 +82,7 @@ export class App extends Component {
       });
     } else {
       /* создаем регулярку для поиска строки */
-      const re = new RegExp(term,'i');
+      const re = new RegExp('^' + term,'i');
       dataSource = data.filter(item => {
         return item.term.search(re) !== -1;
       });
