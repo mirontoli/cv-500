@@ -16,7 +16,7 @@ fs.readFile('./data.txt', 'utf8',  (err, data) => {
           tempJSON.translation = tempRow[2];
           if (tempExample.length) {
             const parsedExamples = tempExample.map(item => {
-              const example = item.trim().split('-');
+              const example = item.trim().split(' - ');
               return {
                 cv: typeof(example[0]) === 'string' ? example[0].trim() : example[0],
                 ru: typeof(example[1]) === 'string' ? example[1].trim() : example[1]
