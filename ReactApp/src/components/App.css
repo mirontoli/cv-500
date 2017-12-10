@@ -10,3 +10,8 @@
 .anticon-close-circle:active {
   color: #666;
 }
+
+.ant-list-pagination {
+  text-align: center;
+  margin-bottom: 16px;
+}
