@@ -3,10 +3,10 @@ const fs = require('fs');
 
 fs.readFile('./data.txt', 'utf8',  (err, data) => {
   if (err) throw err;
-  let resultJSON = [];
+  let resultJSON = {};
   const array = data.toString().split("\r\n");
   if (array.length) {
-    array.forEach(row => {
+    array.forEach((row, index) => {
         const tempRow = row.trim().split(":");
         if (tempRow.length) {
           const tempExample = tempRow[3].split(';');
@@ -26,7 +26,7 @@ fs.readFile('./data.txt', 'utf8',  (err, data) => {
           } else {
             tempJSON.examples = tempRow[3];
           }
-          resultJSON.push(tempJSON);
+          resultJSON[index] = tempJSON;
         }
     });
   }
