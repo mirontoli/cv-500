@@ -1,6 +1,7 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
+/text2json-parser/node_modules
 /ReactApp/node_modules
 
 # testing
@@ -16,6 +17,7 @@
 /ReactApp/.env.test.local
 /ReactApp/.env.production.local
 
+/text2json-parser/npm-debug.log*
 /ReactApp/npm-debug.log*
 /ReactApp/yarn-debug.log*
 /ReactApp/yarn-error.log*
