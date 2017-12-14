@@ -3,21 +3,20 @@ import Uniqid from 'uniqid';
 
 /** 
  * метод готовит исходный массив данных с уникальными id
- * @param {Array} dictionary
+ * @param {Object} dictionary
  * @returns {Array}
  */
 export const prepareListData = dictionary => {
   let dataSource = [];
-  if (dictionary && dictionary.length) {
-    dataSource = dictionary.map(item => {
-      const id =  Uniqid();
-      return {
-        key: id,
-        id: id, 
-        title: item.term + ' (' + item.transcription + ')',
-        description: item.translation,
-        content: prepareExamplesData(item.examples),
-      };
+  if (dictionary && Object.keys(dictionary).length) {
+    Object.keys(dictionary).forEach(item => {
+      dataSource.push({
+        key: item,
+        id: item, 
+        title: dictionary[item].term + ' (' + dictionary[item].transcription + ')',
+        description: dictionary[item].translation,
+        content: prepareExamplesData(dictionary[item].examples),
+      });
     });
   }
   return dataSource;

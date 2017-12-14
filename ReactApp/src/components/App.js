@@ -1,62 +1,34 @@
 import React, { Component } from 'react';
+import * as firebase from 'firebase';
 import { Col, Icon, Input, Row, List } from 'antd';
-import { dictionary } from '../data/data';
 import { prepareListData, filterListData } from '../utils/utils';
 import { ChuvashLetters } from './ChuvashLetters';
 import './App.css';
 
-/* объявляем заголовки таблицы и рендеринг столбцов */
-// const columns = [{
-//   title: 'Термин',
-//   dataIndex: 'term',
-//   key: 'term',
-//   width: '10%',
-//   render: text => <span style={{fontSize: '18px'}}>{ text }</span>,
-// }, {
-//   title: 'Транскрипция',
-//   dataIndex: 'transcription',
-//   key: 'transcription',
-//   width: '10%',
-// }, {
-//   title: 'Перевод',
-//   dataIndex: 'translation',
-//   key: 'translation',
-//   width: '30%',
-//   render: text => <i>{ text }</i>
-// }, {
-//   title: 'Примеры',
-//   dataIndex: 'examples',
-//   key: 'examples',
-//   width: '50%',
-//   render: text => {
-//     return text.map(item => {
-//       return (<span key={Uniqid()}><b>{item.cv}</b>{item.ru ? ' - ' + item.ru : null}; </span>);
-//     })
-//   },
-// }];
-
 export class App extends Component {
-  constructor() {
-    super();
-    /* подготовим массив строк с уникальными идентификаторами */
-    const data = prepareListData(dictionary);
-    /* создаем состояние */
-    this.state = {
-      /* исходный массив */
-      data: data,
-      /* копия исходного массива */
-      dataSource: filterListData(data),
-      searchString: '',
-      currentPage: 1
-    };
+  state = {
+    data: [],
+    dataSource: [],
+    loading: true,
+    searchString: '',
+    currentPage: 1
+  };
+
+  componentWillMount () {
+    const rootRef = firebase.database().ref();
+    rootRef.on('value', snap => {
+      const rawData = snap.val();
+      const preparedData = prepareListData(rawData);
+      this.setState({
+        data: preparedData,
+        dataSource: filterListData(preparedData),
+        loading: false, 
+      });
+    });
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.searchStringInput.focus();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
   }
 
   /* метод добавляет чуашскую букву к строке поиска и вызывает фильтрацию и сохранение состояние */
@@ -87,7 +59,7 @@ export class App extends Component {
   }
 
   render() {
-    const { currentPage, data, dataSource, searchString } = this.state;
+    const { currentPage, data, dataSource, loading, searchString } = this.state;
     const suffix = searchString ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     const pagination = {
       pageSize: 10,
@@ -115,6 +87,7 @@ export class App extends Component {
             </Col>
           </Row>
           <List
+            loading={loading}
             itemLayout="vertical"
             size="large"
             bordered={true}
