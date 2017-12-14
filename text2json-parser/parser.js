@@ -1,5 +1,5 @@
-
 const fs = require('fs');
+const Uniqid = require('uniqid');
 
 fs.readFile('./data.txt', 'utf8',  (err, data) => {
   if (err) throw err;
@@ -7,6 +7,7 @@ fs.readFile('./data.txt', 'utf8',  (err, data) => {
   const array = data.toString().split("\r\n");
   if (array.length) {
     array.forEach((row, index) => {
+        const id = Uniqid();
         const tempRow = row.trim().split(":");
         if (tempRow.length) {
           const tempExample = tempRow[3].split(';');
@@ -26,7 +27,7 @@ fs.readFile('./data.txt', 'utf8',  (err, data) => {
           } else {
             tempJSON.examples = tempRow[3];
           }
-          resultJSON[index] = tempJSON;
+          resultJSON[id] = tempJSON;
         }
     });
   }
