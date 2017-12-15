@@ -1,3 +1,7 @@
+
+#OBSOLETE
+Please, see the new [text2json-parser](text2json-parser) instead. This spreadsheet solution will be removed.
+
 # Data Source
 
 The source data is composed in Excel - [500samah.xlsx](500samah.xlsx). 
