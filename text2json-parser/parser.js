@@ -4,7 +4,12 @@ const Uniqid = require('uniqid');
 fs.readFile('./data.txt', 'utf8',  (err, data) => {
   if (err) throw err;
   let resultJSON = {};
-  const array = data.toString().split("\r\n");
+  const dataCyrDiacr = data.toString()
+      .replace(/ă/g, "ӑ").replace(/Ă/g, "Ӑ")
+      .replace(/ĕ/g, "ӗ").replace(/Ĕ/g, "Ӗ")
+      .replace(/ç/g, "ҫ").replace(/Ç/g, "Ҫ")
+      .replace(/ÿ/g, "ӳ").replace(/Ÿ/g, "Ӳ");
+  const array = dataCyrDiacr.toString().split("\r\n");
   if (array.length) {
     array.forEach((row, index) => {
         const id = Uniqid();
