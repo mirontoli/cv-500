@@ -2,7 +2,7 @@ import React from 'react';
 import Uniqid from 'uniqid';
 
 /** 
- * метод готовит исходный массив данных с уникальными id
+ * method prepares terms data for list
  * @param {Object} dictionary
  * @returns {Array}
  */
@@ -23,7 +23,7 @@ export const prepareListData = dictionary => {
 };
 
 /** 
- * метод возвращает массив отфильтрованный из исходного массива строк
+ * method filters data by term
  * @param {Array} data
  * @param {string} term
  * @param {page} number
@@ -31,9 +31,9 @@ export const prepareListData = dictionary => {
  */
 export const filterListData = (data, term = null, page = 1) => {
   let dataSource = [];
+  let num = 0;
   if (!term) {
-    const slicedData = data.slice(page * 10 - 10, page * 10);
-    dataSource = slicedData.map(item => {
+    dataSource = data.map(item => {
       return {
         key: item.id,
         id: item.id,
@@ -43,15 +43,21 @@ export const filterListData = (data, term = null, page = 1) => {
       };
     });
   } else {
-    /* создаем регулярку для поиска строки */
-    const re = new RegExp("^" + term, "i");
     dataSource = data.filter(item => {
-      return item.title.search(re) !== -1;
+      return item.title.indexOf(term.toLocaleLowerCase()) === 0;
     });
   }
-  return dataSource;
+  num = dataSource.length;
+  if (num > 10) {
+    dataSource = dataSource.slice(page * 10 - 10, page * 10);
+  }
+  return { dataSource, num };
 };
 
+/**
+ * method prepares examples of terms using
+ * @param {Array} examples 
+ */
 const prepareExamplesData = (examples) => {
   if (examples && examples.length) {
     return examples.map(item => {

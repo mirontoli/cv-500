@@ -11,7 +11,8 @@ export class App extends Component {
     dataSource: [],
     loading: true,
     searchString: '',
-    currentPage: 1
+    currentPage: 1,
+    num: 0,
   };
 
   componentWillMount () {
@@ -19,10 +20,12 @@ export class App extends Component {
     rootRef.on('value', snap => {
       const rawData = snap.val();
       const preparedData = prepareListData(rawData);
+      const { dataSource, num } = filterListData(preparedData);
       this.setState({
         data: preparedData,
-        dataSource: filterListData(preparedData),
-        loading: false, 
+        dataSource,
+        loading: false,
+        num,
       });
     });
   }
@@ -34,37 +37,37 @@ export class App extends Component {
   /* метод добавляет чуашскую букву к строке поиска и вызывает фильтрацию и сохранение состояние */
   handleBtnClick = (letter) => {
     const term = this.state.searchString + letter;
-    const dataSource = filterListData(this.state.data, term);
-    this.setState({ searchString: term, dataSource });
+    const { dataSource, num } = filterListData(this.state.data, term);
+    this.setState({ searchString: term, dataSource, num });
   }
 
   /* метод добавляет символ к строке поиска и вызывает фильтрацию и сохранение состояние */
   handleChange = (e) => {
     const term = e.target.value;
-    const dataSource = filterListData(this.state.data, term);
-    this.setState({ searchString: term, dataSource });
+    const { dataSource, num } = filterListData(this.state.data, term);
+    this.setState({ searchString: term, dataSource, num });
   }
 
   handleChangePage = (page) => {
     const term = this.state.searchString;
-    const dataSource = filterListData(this.state.data, term, page);
-    this.setState({ currentPage: page, dataSource });
+    const { dataSource, num } = filterListData(this.state.data, term, page);
+    this.setState({ currentPage: page, dataSource, num });
   }
 
   /* метод очищает строку поиска и состояние на исходный  массив строк */
   emitEmpty = () => {
     this.searchStringInput.focus();
-    const dataSource = filterListData(this.state.data);
-    this.setState({ searchString: '', dataSource });
+    const { dataSource, num } = filterListData(this.state.data);
+    this.setState({ searchString: '', dataSource, num });
   }
 
   render() {
-    const { currentPage, data, dataSource, loading, searchString } = this.state;
+    const { currentPage, dataSource, loading, num, searchString } = this.state;
     const suffix = searchString ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     const pagination = {
       pageSize: 10,
       current: currentPage,
-      total: data.length,
+      total: num,
       onChange: (page => this.handleChangePage(page)),
     };
     return (
