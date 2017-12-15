@@ -58,3 +58,13 @@ body {
   text-align: center;
   color: grey;
 }
+
+.lang-switcher {
+  cursor: pointer;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
+.lang-switcher:hover {
+  border: 1px solid lightblue;
+}
