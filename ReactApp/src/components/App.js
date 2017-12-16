@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import * as firebase from 'firebase';
+//import * as firebase from 'firebase';
 import { Col, Icon, Input, Row, List } from 'antd';
 import { labels } from '../translations/translations';
 import { prepareListData, filterListData } from '../utils/utils';
 import { ChuvashLetters } from './ChuvashLetters';
 import './App.css';
+
+import { rawData } from '../data/data';
 
 export class App extends Component {
   state = {
@@ -18,10 +20,10 @@ export class App extends Component {
   };
 
   componentWillMount () {
-    const rootRef = firebase.database().ref();
-    rootRef.on('value', snap => {
-      const rawData = snap.val();
-      const preparedData = prepareListData(rawData);
+    //const rootRef = firebase.database().ref();
+    //rootRef.on('value', snap => {
+      //const rawData = snap.val();
+      const preparedData = prepareListData(rawData, this.state.lang);
       const { dataSource, num } = filterListData(preparedData);
       this.setState({
         data: preparedData,
@@ -29,7 +31,7 @@ export class App extends Component {
         loading: false,
         num,
       });
-    });
+    //});
   }
 
   componentDidMount() {
@@ -37,10 +39,19 @@ export class App extends Component {
   }
 
   handleLangChange = () => {
+    this.setState({ loading: true });
     const langs = ['ru', 'cv', 'eo'];
     const position = langs.indexOf(this.state.lang);
     const nextLang = langs[position + 1] ? langs[position + 1] : langs[0];
-    this.setState({lang: nextLang });
+    const preparedData = prepareListData(rawData, nextLang);
+    const { dataSource, num } = filterListData(preparedData);
+    this.setState({
+      data: preparedData,
+      dataSource,
+      loading: false,
+      num,
+      lang: nextLang
+    });
   }
 
   /* метод добавляет чуашскую букву к строке поиска и вызывает фильтрацию и сохранение состояние */
@@ -82,8 +93,8 @@ export class App extends Component {
     return (
       <div className="container">
         <Row className="header">
-          <Col span={23}>{ labels.pageTitle[lang]}</Col>
-          <Col span={1}>
+          <Col xs={21} sm={22} md={23} xl={23}>{ labels.pageTitle[lang]}</Col>
+          <Col xs={3} sm={2} md={1} xl={1}>
             <img className="lang-switcher" src={"/" + lang + ".jpg"} alt="cv" onClick={this.handleLangChange} />
           </Col>
         </Row>
