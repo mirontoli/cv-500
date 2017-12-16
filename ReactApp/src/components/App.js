@@ -96,7 +96,7 @@ export class App extends Component {
         <Row className="header">
           <Col xs={21} sm={22} md={23} xl={23}>{ labels.pageTitle[lang]}</Col>
           <Col xs={3} sm={2} md={1} xl={1}>
-            <img className="lang-switcher" src={"/" + lang + ".jpg"} alt="cv" onClick={this.handleLangChange} />
+            <img className="lang-switcher" src={"/images/" + lang + ".jpg"} alt="cv" onClick={this.handleLangChange} />
           </Col>
         </Row>
         <Row style={{ margin: '10px 0'}}>
