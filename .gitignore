@@ -9,6 +9,7 @@
 
 # production
 /ReactApp/build
+/ReactApp/public/audio
 
 # misc
 /ReactApp/.DS_Store
