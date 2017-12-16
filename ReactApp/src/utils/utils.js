@@ -16,6 +16,7 @@ export const prepareListData = (dictionary, lang = 'ru') => {
         title: dictionary[item].term + ' (' + dictionary[item].transcription + ')',
         description: prepareTranslationByLang(dictionary[item].translation, lang),
         content: prepareExamplesData(dictionary[item].examples, lang),
+        audio: dictionary[item].audio,
       });
     });
   }
@@ -40,6 +41,7 @@ export const filterListData = (data, term = null, page = 1) => {
         title: item.title,
         description: item.description,
         content: item.content,
+        audio: item.audio,
       };
     });
   } else {
@@ -87,3 +89,7 @@ const prepareExamplesData = (examples, lang = 'ru') => {
     return null;
   }
 }
+
+export const Aux = (props) => {
+  return props.children;
+};
