@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 //import * as firebase from 'firebase';
-import { Col, Icon, Input, Row, List } from 'antd';
+import { Button, Col, Icon, Input, Row, List } from 'antd';
 import { labels } from '../translations/translations';
 import { prepareListData, filterListData } from '../utils/utils';
 import { ChuvashLetters } from './ChuvashLetters';
+import { Aux } from "../utils/utils";
 import './App.css';
 
 import { rawData } from '../data/data';
@@ -123,10 +124,24 @@ export class App extends Component {
             dataSource={dataSource}
             renderItem={item => (
               <List.Item
-                key={item.title}
+                key={'card-' + item.id}
               >
                 <List.Item.Meta
-                  title={item.title}
+                  title={(
+                    <Aux>
+                      { item.audio ? 
+                        <Aux>
+                          <Button style={{marginRight: '5px'}} size={'small'} shape="circle" icon="play-circle-o"
+                            onClick={() => {
+                              this['audio' + item.id].play();
+                            }}
+                          />
+                          <audio
+                            ref={(audio) => { this['audio' + item.id] = audio } }
+                          ><source src={item.audio} type="audio/mp3" /></audio>
+                        </Aux> : null }
+                      {item.title}
+                    </Aux>)}
                   description={item.description}
                 />
                 {item.content}
