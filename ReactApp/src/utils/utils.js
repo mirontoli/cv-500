@@ -3,20 +3,20 @@ import Uniqid from 'uniqid';
 
 /** 
  * method prepares terms data for list
- * @param {Object} dictionary
+ * @param {Array} dictionary
  * @returns {Array}
  */
 export const prepareListData = (dictionary, lang = 'ru') => {
   let dataSource = [];
-  if (dictionary && Object.keys(dictionary).length) {
-    Object.keys(dictionary).forEach(item => {
+  if (dictionary.length) {
+    dictionary.forEach(item => {
       dataSource.push({
-        key: item,
-        id: item, 
-        title: dictionary[item].term + ' (' + dictionary[item].transcription + ')',
-        description: prepareTranslationByLang(dictionary[item].translation, lang),
-        content: prepareExamplesData(dictionary[item].examples, lang),
-        audio: dictionary[item].audio,
+        key: item._id,
+        id: item._id, 
+        title: item.term + ' (' + item.transcription + ')',
+        description: prepareTranslationByLang(item.translation, lang),
+        content: prepareExamplesData(item.examples, lang),
+        audio: item.audio,
       });
     });
   }

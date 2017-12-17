@@ -7,35 +7,58 @@ import { ChuvashLetters } from './ChuvashLetters';
 import { Aux } from "../utils/utils";
 import './App.css';
 
-import { rawData } from '../data/data';
+//import { rawData } from '../data/data';
 
 export class App extends Component {
   state = {
     data: [],
     dataSource: [],
     loading: true,
+    rawData: [],
     searchString: '',
     currentPage: 1,
     num: 0,
     lang: 'ru',
   };
 
-  componentWillMount () {
-    //const rootRef = firebase.database().ref();
-    //rootRef.on('value', snap => {
-      //const rawData = snap.val();
-      const preparedData = prepareListData(rawData, this.state.lang);
-      const { dataSource, num } = filterListData(preparedData);
-      this.setState({
-        data: preparedData,
-        dataSource,
-        loading: false,
-        num,
-      });
-    //});
-  }
+  // componentWillMount () {
+    // const rootRef = firebase.database().ref();
+    // rootRef.on('value', snap => {
+      // const rawData = snap.val();
+      // const preparedData = prepareListData(rawData, this.state.lang);
+      // const { dataSource, num } = filterListData(preparedData);
+      // this.setState({
+      //   data: preparedData,
+      //   dataSource,
+      //   loading: false,
+      //   num,
+      // });
+    // });
+  // }
 
   componentDidMount() {
+    fetch('/api/get-articles')
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Ошибка получения данных");
+        }
+      })
+      .then(rawData => {
+        const preparedData = prepareListData(rawData, this.state.lang);
+        const { dataSource, num } = filterListData(preparedData);
+        this.setState({
+          data: preparedData,
+          dataSource,
+          loading: false,
+          rawData,
+          num,
+        });
+      })
+      .catch(err => {
+        console.log('error fetching data', err.message)
+      });
     this.searchStringInput.focus();
   }
 
@@ -44,7 +67,7 @@ export class App extends Component {
     const langs = ['ru', 'cv', 'eo'];
     const position = langs.indexOf(this.state.lang);
     const nextLang = langs[position + 1] ? langs[position + 1] : langs[0];
-    const preparedData = prepareListData(rawData, nextLang);
+    const preparedData = prepareListData(this.state.rawData, nextLang);
     const { dataSource, num } = filterListData(preparedData);
     this.setState({
       data: preparedData,
