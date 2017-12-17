@@ -3,7 +3,7 @@ const Uniqid = require('uniqid');
 
 fs.readFile('./data.txt', 'utf8',  (err, data) => {
   if (err) throw err;
-  let resultJSON = {};
+  let resultJSON = [];
   const dataCyrDiacr = data.toString()
       .replace(/ă/g, "ӑ").replace(/Ă/g, "Ӑ")
       .replace(/ĕ/g, "ӗ").replace(/Ĕ/g, "Ӗ")
@@ -12,11 +12,12 @@ fs.readFile('./data.txt', 'utf8',  (err, data) => {
   const array = dataCyrDiacr.toString().split("\r\n");
   if (array.length) {
     array.forEach((row, index) => {
-        const id = Uniqid();
+        //const id = Uniqid();
         const tempRow = row.trim().split(":");
         if (tempRow.length) {
           const tempExample = tempRow[3].split(';');
           const tempJSON = {};
+          tempJSON._id = Uniqid();
           tempJSON.term = tempRow[0];
           tempJSON.transcription = tempRow[1];
           tempJSON.translation = tempRow[2];
@@ -32,7 +33,7 @@ fs.readFile('./data.txt', 'utf8',  (err, data) => {
           } else {
             tempJSON.examples = tempRow[3];
           }
-          resultJSON[id] = tempJSON;
+          resultJSON.push(tempJSON);
         }
     });
   }
