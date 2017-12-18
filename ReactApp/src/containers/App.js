@@ -11,7 +11,6 @@ import { ItemList } from '../components/ItemList';
 import { Login } from '../components/Login';
 import { Footer } from '../components/Footer';
 import { filterListData } from '../utils/utils';
-import { labels } from '../translations/translations';
 
 class App extends Component {
   state = {
@@ -27,6 +26,7 @@ class App extends Component {
     fetching: bool.isRequired,
     getState: func.isRequired,
     goTo: func.isRequired,
+    labels: object.isRequired,
     language: string.isRequired,
     location: object.isRequired,
     loggedIn: bool.isRequired,
@@ -61,7 +61,7 @@ class App extends Component {
 
   render() {
     const { currentPage, dataSource, num, searchString } = this.state;
-    const { changeAppLanguage, fetching, location, loggedIn, goTo, language } = this.props;
+    const { changeAppLanguage, fetching, goTo, labels, language, location, loggedIn } = this.props;
     if (loggedIn) {
       if (location.pathname === '/login') {
         /* authorized users has not access to /login */
@@ -81,10 +81,10 @@ class App extends Component {
     };
     return (
       <div className="container">
-        <Navigation labels={labels} lang={language} handleLangChange={changeAppLanguage} goTo={goTo} />
+        <Navigation labels={labels} language={language} handleLangChange={changeAppLanguage} goTo={goTo} />
         <SearchBlock searchString={searchString} handleChange={this.handleChange} />
         <Switch>
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/login" render={(props) => <Login {...props} labels={labels} language={language} />}/>
           <Route path="/" render={(props) => <ItemList {...props} pagination={pagination} dataSource={dataSource} loading={fetching} />}/>
         </Switch>
         <Footer text={labels.pageFooter[language]} date={new Date().getFullYear()} />
@@ -97,8 +97,9 @@ const mapStateToProps = state => ({
   data: state.app.data,
   error: state.app.error,
   fetching: state.app.fetching,
-  loggedIn: state.app.loggedIn,
+  labels: state.app.labels,
   language: state.app.language,
+  loggedIn: state.app.loggedIn,
   user: state.app.user,
 });
 
