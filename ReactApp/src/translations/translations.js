@@ -8,5 +8,10 @@ export const labels = {
     cv: "«Хавал» чăваш халăх пĕрлешĕвĕ",
     ru: "Чувашская общественная организация «Хавал»",
     eo: "Ĉuvaŝa socia organizo «Ĥaval»"
+  },
+  menuLoginButton: {
+    cv: "Кӗр",
+    ru: "Вход",
+    eo: "Eniri"
   }
 };
