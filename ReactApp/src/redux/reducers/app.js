@@ -5,11 +5,13 @@ import {
     UPDATE_APPSTATE,
     CHANGE_APP_LANGUAGE
   } from "../constants";
-  
+  import { labels } from '../../translations/translations';
+
   const initialState = {
     data: [],
     error: null,
     fetching: false,
+    labels: labels,
     language: 'ru',
     loggedIn: false,
     rawData: [],
