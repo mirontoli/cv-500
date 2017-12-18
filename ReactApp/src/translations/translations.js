@@ -13,5 +13,15 @@ export const labels = {
     cv: "Кӗр",
     ru: "Вход",
     eo: "Eniri"
+  },
+  formUsernameField: {
+    cv: 'Имя пользователя',
+    ru: 'Имя пользователя',
+    eo: 'Uzanto nomo'
+  },
+  formPasswordField: {
+    cv: 'Вăрттăн сăмах',
+    ru: 'Пароль',
+    eo: 'Pasvorto'
   }
 };
