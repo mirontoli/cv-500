@@ -12,7 +12,7 @@ export class Navigation extends Component {
     goTo: func.isRequired,
     handleLangChange: func.isRequired,
     labels: object.isRequired,
-    lang: string.isRequired
+    language: string.isRequired
   };
 
   handleClick = e => {
@@ -27,11 +27,11 @@ export class Navigation extends Component {
   };
 
   render() {
-    const { labels, lang } = this.props;
+    const { labels, language } = this.props;
     return (
       <Row className="header">
         <Col xs={16} sm={17} md={18} xl={20} className="header-title">
-          <Link to={"/"}>{labels.pageTitle[lang]}</Link>
+          <Link to={"/"}>{labels.pageTitle[language]}</Link>
         </Col>
         <Col xs={8} sm={7} md={6} xl={4}>
           <Menu
@@ -44,11 +44,11 @@ export class Navigation extends Component {
             <Menu.Item key="language">
               <img
                 className="lang-switcher"
-                src={"/images/" + lang + ".jpg"}
-                alt={lang}
+                src={"/images/" + language + ".jpg"}
+                alt={language}
               />
             </Menu.Item>
-            <Menu.Item key="login">{labels.menuLoginButton[lang]}</Menu.Item>
+            <Menu.Item key="login">{labels.menuLoginButton[language]}</Menu.Item>
           </Menu>
         </Col>
       </Row>
