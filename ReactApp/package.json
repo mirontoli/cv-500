@@ -8,7 +8,13 @@
     "firebase": "^4.8.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
     "react-scripts": "1.0.17",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "uniqid": "^4.1.1"
   },
   "scripts": {
@@ -25,7 +31,8 @@
     "type": "git",
     "url": "git+https://github.com/mirontoli/cv-500.git"
   },
-  "homepage" : "http://500.кала-ха.рф/",
+  "proxy": "http://localhost:8080/",
+  "homepage": "http://500.кала-ха.рф/",
   "author": "Evgeny Belkin <sunafajro@gmail.com>",
   "license": "ISC"
 }
