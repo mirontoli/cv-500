@@ -23,5 +23,10 @@ export const labels = {
     cv: 'Вăрттăн сăмах',
     ru: 'Пароль',
     eo: 'Pasvorto'
+  },
+  formLoginButton: {
+    cv: 'Кӗр',
+    ru: 'Войти',
+    eo: 'Eniri'
   }
 };
