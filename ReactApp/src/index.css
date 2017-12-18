@@ -100,3 +100,8 @@ body {
   text-decoration: none;
   color: rgba(0, 0, 0, 0.65);
 }
+
+.login-form {
+  margin-top: 20px;
+  min-height: 200px;
+}
