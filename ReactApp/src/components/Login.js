@@ -1,20 +1,27 @@
 import React from "react";
-import { object, string } from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Button, Col, Icon, Input, Form, Row } from 'antd';
+import { login } from '../redux/actions/auth';
 
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
   static propTypes = {
+    fetching: bool.isRequired,
     labels: object.isRequired,
     language: string.isRequired,
-  }
+    login: func.isRequired,
+    loggedIn: bool.isRequired,
+    error: string.isRequired
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        this.props.login(values.username, values.password);
       }
     });
   }
@@ -27,7 +34,7 @@ class LoginForm extends React.Component {
         <Col xs={{span: 24}} sm={{span: 24}} md={{span: 12, offset: 6}} xl={{span: 8, offset: 8}}  >
           <Form className="login-form" onSubmit={this.handleSubmit}>
             <FormItem>
-              {getFieldDecorator('userName', {
+              {getFieldDecorator('username', {
                 rules: [{ required: true, message: 'Please input your username!' }],
               })(
                 <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={labels.formUsernameField[language]} />
@@ -52,4 +59,21 @@ class LoginForm extends React.Component {
   }
 }
 
-export const Login = Form.create()(LoginForm);
+const mapStateToProps = state => ({
+  fetching: state.auth.fetching,
+  labels: state.app.labels,
+  language: state.app.language,
+  loggedIn: state.auth.loggedIn,
+  error: state.auth.error
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  login
+}, dispatch);
+
+const Login = Form.create()(LoginForm);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

@@ -9,7 +9,7 @@ import {
 
   const initialState = {
     data: [],
-    error: null,
+    error: '',
     fetching: false,
     labels: labels,
     language: 'ru',
@@ -30,6 +30,7 @@ import {
         return {
           ...state,
           data: action.data,
+          error: '',
           fetching: false,
           language: action.language,
           loggedIn: action.loggedIn,

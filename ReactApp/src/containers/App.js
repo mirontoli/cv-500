@@ -8,7 +8,7 @@ import { changeAppLanguage, getState } from "../redux/actions/app";
 import { Navigation } from '../components/Navigation';
 import { SearchBlock } from '../components/SearchBlock';
 import { ItemList } from '../components/ItemList';
-import { Login } from '../components/Login';
+import Login from '../components/Login';
 import { Footer } from '../components/Footer';
 import { filterListData } from '../utils/utils';
 
@@ -23,6 +23,7 @@ class App extends Component {
   static propTypes = {
     changeAppLanguage: func.isRequired,
     data: array.isRequired,
+    error: string.isRequired,
     fetching: bool.isRequired,
     getState: func.isRequired,
     goTo: func.isRequired,
@@ -84,7 +85,7 @@ class App extends Component {
         <Navigation labels={labels} language={language} handleLangChange={changeAppLanguage} goTo={goTo} />
         <SearchBlock searchString={searchString} handleChange={this.handleChange} />
         <Switch>
-          <Route exact path="/login" render={(props) => <Login {...props} labels={labels} language={language} />}/>
+          <Route exact path="/login" component={Login}/>
           <Route path="/" render={(props) => <ItemList {...props} pagination={pagination} dataSource={dataSource} loading={fetching} />}/>
         </Switch>
         <Footer text={labels.pageFooter[language]} date={new Date().getFullYear()} />
