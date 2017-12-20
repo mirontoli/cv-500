@@ -3,14 +3,14 @@ import { array, bool, func, object, string } from 'prop-types';
 import { Route, Redirect, Switch, withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { push } from 'react-router-redux';
-import { changeAppLanguage, getState } from "../redux/actions/app";
-import { Navigation } from '../components/Navigation';
+import { getState } from "../redux/actions/app";
+import { Spin, Icon } from 'antd';
+import Navigation from '../components/Navigation';
 import { SearchBlock } from '../components/SearchBlock';
 import { ItemList } from '../components/ItemList';
 import Login from '../components/Login';
 import { Footer } from '../components/Footer';
-import { filterListData } from '../utils/utils';
+import { Aux, filterListData } from '../utils/utils';
 
 class App extends Component {
   state = {
@@ -21,12 +21,11 @@ class App extends Component {
   };
 
   static propTypes = {
-    changeAppLanguage: func.isRequired,
+    appLoaded: bool.isRequired,
     data: array.isRequired,
     error: string.isRequired,
     fetching: bool.isRequired,
     getState: func.isRequired,
-    goTo: func.isRequired,
     labels: object.isRequired,
     language: string.isRequired,
     location: object.isRequired,
@@ -62,7 +61,8 @@ class App extends Component {
 
   render() {
     const { currentPage, dataSource, num, searchString } = this.state;
-    const { changeAppLanguage, fetching, goTo, labels, language, location, loggedIn } = this.props;
+    const { appLoaded, fetching, labels, language, location, loggedIn } = this.props;
+    const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
     if (loggedIn) {
       if (location.pathname === '/login') {
         /* authorized users has not access to /login */
@@ -82,19 +82,23 @@ class App extends Component {
     };
     return (
       <div className="container">
-        <Navigation labels={labels} language={language} handleLangChange={changeAppLanguage} goTo={goTo} />
-        <SearchBlock searchString={searchString} handleChange={this.handleChange} />
-        <Switch>
-          <Route exact path="/login" component={Login}/>
-          <Route path="/" render={(props) => <ItemList {...props} pagination={pagination} dataSource={dataSource} loading={fetching} />}/>
-        </Switch>
-        <Footer text={labels.pageFooter[language]} date={new Date().getFullYear()} />
+        { appLoaded ?
+          <Aux>
+            <Navigation />
+            <SearchBlock searchString={searchString} handleChange={this.handleChange} />
+            <Switch>
+              <Route exact path="/login" component={Login}/>
+              <Route path="/" render={(props) => <ItemList {...props} pagination={pagination} dataSource={dataSource} loading={fetching} />}/>
+            </Switch>
+            <Footer text={labels.pageFooter[language]} date={new Date().getFullYear()} />
+          </Aux> : <Spin style={{width: '100%', textAlign: 'center'}} indicator={antIcon} /> }
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  appLoaded: state.app.appLoaded,
   data: state.app.data,
   error: state.app.error,
   fetching: state.app.fetching,
@@ -107,9 +111,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      changeAppLanguage,
       getState,
-      goTo: (route) => push(route),
     },
     dispatch
   );
