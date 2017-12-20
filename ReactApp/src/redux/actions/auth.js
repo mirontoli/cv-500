@@ -37,7 +37,11 @@ export const login = (username, password) => {
         if (response.ok) {
           return response.json();
         }
-        throw new Error("Произошла ошибка!");
+        if(response.status === 400) {
+          throw new Error("Неверный логин или пароль");
+        } else {
+          throw new Error("Произошла ошибка");
+        }
       })
       .then(result => dispatch(loginSuccess(result)))
       .catch(error => dispatch(loginFailed(error.message)));
@@ -84,7 +88,7 @@ export const logout = () => {
         if (response.ok) {
           return response.json();
         }
-        throw new Error("Произошла ошибка!");
+        throw new Error("Произошла ошибка");
       })
       .then(result => dispatch(logoutSuccess(result)))
       .catch(error => dispatch(logoutFailed(error)));
