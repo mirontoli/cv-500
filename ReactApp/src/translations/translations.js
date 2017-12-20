@@ -14,6 +14,11 @@ export const labels = {
     ru: "Вход",
     eo: "Eniri"
   },
+  menuLogoutButton: {
+    cv: "Тух",
+    ru: "Выйти",
+    eo: "Eliri"
+  },
   formUsernameField: {
     cv: 'Имя пользователя',
     ru: 'Имя пользователя',
