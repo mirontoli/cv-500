@@ -8,6 +8,7 @@ import {
   import { labels } from '../../translations/translations';
 
   const initialState = {
+    appLoaded: false,
     data: [],
     error: '',
     fetching: false,
@@ -29,6 +30,7 @@ import {
       case GET_APPSTATE_SUCCESS:
         return {
           ...state,
+          appLoaded: true,
           data: action.data,
           error: '',
           fetching: false,
@@ -50,7 +52,6 @@ import {
           ...state,
           loggedIn: action.loggedIn,
           user: action.user,
-          language: action.language
         };
   
       case CHANGE_APP_LANGUAGE:
