@@ -64,7 +64,6 @@ export const updateAppState = newState => {
       type: UPDATE_APPSTATE,
       loggedIn: newState.loggedIn,
       user: newState.user,
-      language: newState.language
     });
   };
 };
