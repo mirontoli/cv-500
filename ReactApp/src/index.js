@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { ConnectedRouter } from "react-router-redux";
 import store, { history } from "./store/store";
 import App from "./containers/App";
-import registerServiceWorker from "./registerServiceWorker";
+//import registerServiceWorker from "./registerServiceWorker";
 import "./index.css";
 
 ReactDOM.render(
@@ -16,4 +16,4 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-registerServiceWorker();
+//registerServiceWorker();

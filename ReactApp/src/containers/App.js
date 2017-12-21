@@ -63,15 +63,17 @@ class App extends Component {
     const { currentPage, dataSource, num, searchString } = this.state;
     const { appLoaded, fetching, labels, language, location, loggedIn } = this.props;
     const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
-    if (loggedIn) {
-      if (location.pathname === '/login') {
-        /* authorized users has not access to /login */
-        return <Redirect to='/' />;
-      }
-    } else {
-      if (location.pathname !== '/' && location.pathname !== '/login') {
-        /* guests has access only to / and /login */
-        return <Redirect to='/login' />;
+    if (appLoaded) {
+      if (loggedIn) {
+        if (location.pathname === '/login') {
+          /* authorized users has not access to /login */
+          return <Redirect to='/' />;
+        }
+      } else {
+        if (location.pathname !== '/' && location.pathname !== '/login') {
+          /* guests has access only to / and /login */
+          return <Redirect to='/login' />;
+        }
       }
     }
     const pagination = {
@@ -88,7 +90,8 @@ class App extends Component {
             <SearchBlock searchString={searchString} handleChange={this.handleChange} />
             <Switch>
               <Route exact path="/login" component={Login}/>
-              <Route path="/" render={(props) => <ItemList {...props} pagination={pagination} dataSource={dataSource} loading={fetching} />}/>
+              <Route exact path="/edit/:id" render={(props) => (<div>It works!</div>)} />
+              <Route path="/" render={(props) => <ItemList {...props} pagination={pagination} dataSource={dataSource} loading={fetching} loggedIn={loggedIn} />}/>
             </Switch>
             <Footer text={labels.pageFooter[language]} date={new Date().getFullYear()} />
           </Aux> : <Spin style={{width: '100%', textAlign: 'center'}} indicator={antIcon} /> }

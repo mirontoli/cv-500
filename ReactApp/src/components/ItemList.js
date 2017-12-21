@@ -1,9 +1,17 @@
 import React from "react";
 import { array, bool, object } from 'prop-types';
-import { Button, List } from "antd";
+import { Link } from "react-router-dom";
+import { Button, Icon, List } from "antd";
 import { Aux } from "../utils/utils";
 
-export const ItemList = ({ loading, dataSource, pagination }) => {
+const IconText = ({ id, type, text }) => (
+  <Link to={'/edit/' + id}>
+    <Icon type={type} style={{ marginRight: 8 }} />
+    {text}
+  </Link>
+);
+
+export const ItemList = ({ loading, dataSource, pagination, loggedIn }) => {
   return (
     <div>
       <List
@@ -14,7 +22,10 @@ export const ItemList = ({ loading, dataSource, pagination }) => {
         pagination={pagination}
         dataSource={dataSource}
         renderItem={item => (
-          <List.Item key={"card-" + item.id}>
+          <List.Item
+            key={"card-" + item.id}
+            actions={loggedIn ? [<IconText id={item.id} type="edit" text="Редактировать"></IconText>] : []}
+          >
             <List.Item.Meta
               title={
                 <Aux>
@@ -54,5 +65,6 @@ export const ItemList = ({ loading, dataSource, pagination }) => {
 ItemList.propTypes = {
   loading: bool.isRequired,
   dataSource: array.isRequired,
-  pagination: object.isRequired
+  pagination: object.isRequired,
+  loggedIn: bool.isRequired,
 };
