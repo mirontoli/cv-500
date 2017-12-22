@@ -1,6 +1,7 @@
 import sha256 from "js-sha256";
 import { message } from "antd";
 import { updateAppState } from "./app";
+import { getCsrfToken } from "../../utils/utils"; 
 
 import {
   LOGIN,
@@ -17,35 +18,37 @@ export const login = (username, password) => {
       type: LOGIN
     });
 
-    const body = {
-      LoginForm: {
-        username: username,
-        password: sha256(password)
-      }
-    };
-
-    fetch("/api/login", {
-      method: "POST",
-      accept: "application/json",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        if(response.status === 400) {
-          throw new Error("Неверный логин или пароль");
-        } else {
-          throw new Error("Произошла ошибка");
-        }
+    getCsrfToken()
+      .then(csrf => {
+        csrf.LoginForm = {
+          username: username,
+          password: sha256(password)
+        };
+        const body = JSON.stringify(csrf);    
+        fetch("/api/login", {
+          method: "POST",
+          accept: "application/json",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body,
+        })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            }
+            if(response.status === 400) {
+              throw new Error("Неверный логин или пароль");
+            } else {
+              throw new Error("Произошла ошибка");
+            }
+          })
+          .then(result => dispatch(loginSuccess(result)))
+          .catch(error => dispatch(loginFailed(error.message)));
       })
-      .then(result => dispatch(loginSuccess(result)))
-      .catch(error => dispatch(loginFailed(error.message)));
-  };
+      .catch(error => dispatch(loginFailed(error.message)));  
+  }
 };
 
 export const loginSuccess = result => {
@@ -75,23 +78,28 @@ export const logout = () => {
     dispatch({
       type: LOGOUT
     });
-
-    fetch("/api/logout", {
-      method: "POST",
-      accept: "application/json",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Произошла ошибка");
+    getCsrfToken()
+      .then(csrf => {
+        const body = JSON.stringify(csrf);
+        fetch("/api/logout", {
+          method: "POST",
+          accept: "application/json",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body,
+        })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error("Произошла ошибка");
+          })
+          .then(result => dispatch(logoutSuccess(result)))
+          .catch(error => dispatch(logoutFailed(error.message)));
       })
-      .then(result => dispatch(logoutSuccess(result)))
-      .catch(error => dispatch(logoutFailed(error)));
+      .catch(error => dispatch(logoutFailed(error.message)));
   };
 };
 
