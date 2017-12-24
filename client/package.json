@@ -31,7 +31,7 @@
     "type": "git",
     "url": "git+https://github.com/mirontoli/cv-500.git"
   },
-  "proxy": "http://127.0.0.1:8080/",
+  "proxy": "http://127.0.0.1:1337/",
   "homepage": "http://500.кала-ха.рф/",
   "author": "Evgeny Belkin <sunafajro@gmail.com>",
   "license": "ISC"
