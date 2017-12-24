@@ -44,7 +44,6 @@ export const getStateSuccess = state => {
       type: GET_APPSTATE_SUCCESS,
       data: prepareListData(state.data),
       loggedIn: state.loggedIn,
-      language: state.language,
       rawData: state.data,
       user: state.user.length === undefined ? state.user : {},
     });

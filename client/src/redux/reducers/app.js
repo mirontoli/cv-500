@@ -34,7 +34,6 @@ import {
           data: action.data,
           error: '',
           fetching: false,
-          language: action.language,
           loggedIn: action.loggedIn,
           rawData: action.rawData,
           user: action.user,
