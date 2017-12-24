@@ -1,24 +1,50 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-# dependencies
+# parser
 /text2json-parser/node_modules
-/ReactApp/node_modules
-
-# testing
-/ReactApp/coverage
-
-# production
-/ReactApp/build
-/ReactApp/public/audio
-
-# misc
-/ReactApp/.DS_Store
-/ReactApp/.env.local
-/ReactApp/.env.development.local
-/ReactApp/.env.test.local
-/ReactApp/.env.production.local
-
 /text2json-parser/npm-debug.log*
-/ReactApp/npm-debug.log*
-/ReactApp/yarn-debug.log*
-/ReactApp/yarn-error.log*
+
+# react client
+
+/client/node_modules
+
+/client/coverage
+
+/client/build
+/client/public/audio
+
+/client/.DS_Store
+/client/.env.local
+/client/.env.development.local
+/client/.env.test.local
+/client/.env.production.local
+
+/client/npm-debug.log*
+/client/yarn-debug.log*
+/client/yarn-error.log*
+
+
+# sails backend
+
+/server/config/local.js
+
+/server/node_modules
+/server/bower_components
+
+/server/.tmp
+/server/dump.rdb
+
+/server/lib-cov
+/server/*.seed
+/server/*.log
+/server/*.out
+/server/*.pid
+/server/npm-debug.log
+
+/server/*~
+/server/*#
+/server/.DS_STORE
+/server/.netbeans
+/server/nbproject
+/server/.idea
+/server/.node_history
