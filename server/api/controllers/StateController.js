@@ -1,6 +1,5 @@
 module.exports = {
   getState: (req, res) => {
-    console.log(req.session);
     Article.getArticles()
       .then(articles => {
         return res.send({
