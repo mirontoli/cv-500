@@ -58,8 +58,7 @@ export const filterListData = (data = [], term = null, page = 1) => {
   return { dataSource, num };
 };
 
-export const getNextLanguage = language => {
-  const langs = ["ru", "cv", "eo"];
+export const getNextLanguage = (language, langs) => {
   const position = langs.indexOf(language);
   const nextLang = langs[position + 1] ? langs[position + 1] : langs[0];
   return nextLang;

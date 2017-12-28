@@ -74,8 +74,8 @@ export const updateAppState = newState => {
 /* action changes app language and filters data by it */
 export const changeAppLanguage = () => {
   return (dispatch, getState) => {
-    const { language, rawData } = getState().app;
-    const nextLang = getNextLanguage(language);
+    const { language, languages, rawData } = getState().app;
+    const nextLang = getNextLanguage(language, languages);
     dispatch({
       type: CHANGE_APP_LANGUAGE,
       language: nextLang,
