@@ -11,8 +11,8 @@ export const prepareListData = (dictionary = [], lang = 'ru') => {
   if (dictionary.length) {
     dictionary.forEach(item => {
       dataSource.push({
-        key: item._id,
-        id: item._id, 
+        key: item.id,
+        id: item.id, 
         title: item.term + ' (' + item.transcription + ')',
         description: prepareTranslationByLang(item.translation, lang),
         content: prepareExamplesData(item.examples, lang),
