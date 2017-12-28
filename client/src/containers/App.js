@@ -10,6 +10,7 @@ import { SearchBlock } from '../components/SearchBlock';
 import { ItemList } from '../components/ItemList';
 import Login from '../components/Login';
 import { Footer } from '../components/Footer';
+import EditArticle from '../components/EditArticle';
 import { Aux, filterListData } from '../utils/utils';
 
 class App extends Component {
@@ -90,7 +91,7 @@ class App extends Component {
             <SearchBlock searchString={searchString} handleChange={this.handleChange} />
             <Switch>
               <Route exact path="/login" component={Login}/>
-              <Route exact path="/edit/:id" render={(props) => (<div>It works!</div>)} />
+              <Route exact path="/edit/:id" render={(props) => <EditArticle {...props} />} />
               <Route path="/" render={(props) => <ItemList {...props} pagination={pagination} dataSource={dataSource} loading={fetching} loggedIn={loggedIn} />}/>
             </Switch>
             <Footer text={labels.pageFooter[language]} date={new Date().getFullYear()} />
