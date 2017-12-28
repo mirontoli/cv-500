@@ -7,10 +7,10 @@ const ButtonGroup = Button.Group;
 export const ChuvashLetters = ({ handleBtnClick }) => {
   return (
     <ButtonGroup>
-        <Button onClick={() => handleBtnClick('ă')}>ă</Button>
-        <Button onClick={() => handleBtnClick('ĕ')}>ĕ</Button>
-        <Button onClick={() => handleBtnClick('ç')}>ç</Button>
-        <Button onClick={() => handleBtnClick('ÿ')}>ÿ</Button>
+        <Button onClick={() => handleBtnClick('ӑ')}>ă</Button>
+        <Button onClick={() => handleBtnClick('ӗ')}>ĕ</Button>
+        <Button onClick={() => handleBtnClick('ҫ')}>ç</Button>
+        <Button onClick={() => handleBtnClick('ӳ')}>ÿ</Button>
     </ButtonGroup>
   )
 }
