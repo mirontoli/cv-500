@@ -105,3 +105,20 @@ body {
   margin-top: 20px;
   min-height: 200px;
 }
+
+.exampleCard {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.exampleCard:hover {
+  border: 1px solid #aaaaaa;
+}
+
+.exampleCardSelected {
+  border: 1px solid #aaaaaa;
+}
+
+.exampleCard .ant-card-body {
+  padding: 12px;
+}
