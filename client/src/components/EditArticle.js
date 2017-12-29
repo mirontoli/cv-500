@@ -48,10 +48,13 @@ class EditArticleForm extends Component {
     }
   }
 
+  /**
+   * @param {Object} example
+   */
   handleExamplesUpdate = (example) => {
     let examples = this.state.examples.map((item, index) => {
       let newItem;
-      if (index && index === example.index) {
+      if (index.toString() === example.index) {
         newItem = {...item};
         newItem[example.lang] = example.text;
       } else {
@@ -65,8 +68,33 @@ class EditArticleForm extends Component {
     this.setState({ examples });
   }
 
-  handleClick = () => {
-
+  /**
+   * @param {string} action
+   * @param {number} num
+   * @param {string} lang
+   */
+  handleClick = (action, num, lang) => {
+    let example = {index: null, lang: null, text: null};
+    if(action === 'add') {
+      example = {
+        index: num.toString(),
+        lang: null,
+        text: null,
+      }
+    } else if(action === 'edit') {
+      example = {
+        index: num.toString(),
+        lang: lang,
+        text: this.state.examples[num][lang],
+      }
+    } else if(action === 'new') {
+      example = {
+        index: null,
+        lang: lang,
+        text: null,
+      }
+    }
+    this.setState({ example });
   }
 
   render() {
@@ -106,7 +134,7 @@ class EditArticleForm extends Component {
           })(<Input />)}
         </FormItem>
         <Row>
-          <ExamplesList id={id} examples={examples} handleClick={this.handleClick} />
+          <ExamplesList id={id} exampleId={example.index} examples={examples} handleClick={this.handleClick} />
           <AddExampleForm example={example} labels={labels} language={language} languages={languages} handleUpdate={this.handleExamplesUpdate} />
         </Row>
       </Form>

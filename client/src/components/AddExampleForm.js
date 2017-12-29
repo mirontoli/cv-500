@@ -27,6 +27,14 @@ export class AddExampleForm extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      index: nextProps.example.index,
+      lang: nextProps.example.index ? nextProps.example.lang : 'cv',
+      text: nextProps.example.text,
+    });
+  }
+
   handleChange = (value) => {
     this.setState({lang: value});
   }
