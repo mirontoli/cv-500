@@ -44,6 +44,16 @@ export const labels = {
     ru: 'Траскрипция',
     eo: 'Vorto',
   },
+  formTranslationsBlock: {
+    cv: 'Перевод',
+    ru: 'Перевод',
+    eo: 'Traduko',
+  },
+  formExamplesBlock: {
+    cv: 'Примеры',
+    ru: 'Примеры',
+    eo: 'Ekzemploj',
+  },
   formAddExampleButton: {
     cv: 'Добавить',
     ru: 'Добавить',

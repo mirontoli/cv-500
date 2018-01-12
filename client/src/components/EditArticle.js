@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import { array, bool, object, string } from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { Form, Input, Row } from "antd";
+import { Input, Row } from "antd";
+import { TranslationsList } from "./TranslationsList";
 import { AddExampleForm } from './AddExampleForm';
 import { ExamplesList } from './ExamplesList';
-
-const FormItem = Form.Item;
 
 class EditArticleForm extends Component {
   state = {
@@ -75,69 +74,50 @@ class EditArticleForm extends Component {
    */
   handleClick = (action, num, lang) => {
     let example = {index: null, lang: null, text: null};
-    if(action === 'add') {
-      example = {
-        index: num.toString(),
-        lang: null,
-        text: null,
-      }
-    } else if(action === 'edit') {
-      example = {
-        index: num.toString(),
-        lang: lang,
-        text: this.state.examples[num][lang],
-      }
-    } else if(action === 'new') {
-      example = {
-        index: null,
-        lang: lang,
-        text: null,
-      }
+    switch (action) {
+      case 'add': 
+        example = {
+          index: num.toString(),
+          lang: null,
+          text: null,
+        }; break;
+      case 'edit':
+        example = {
+          index: num.toString(),
+          lang: lang,
+          text: this.state.examples[num][lang],
+        }; break;
+      case 'new':
+        example = {
+          index: null,
+          lang: lang,
+          text: null,
+        }; break;
+      case 'delete':
+        break;
     }
     this.setState({ example });
   }
 
   render() {
-    const { id, term, transcription, example, examples } = this.state;
+    const { id, term, translation, transcription, example, examples } = this.state;
     const { labels, language, languages } = this.props;
-    const { getFieldDecorator } = this.props.form;
     return (
-      <Form>
-        <FormItem label={labels.formTermField[language]}>
-          {getFieldDecorator("term", {
-            initialValue: term,
-            rules: [
-              {
-                type: "text",
-                message: "The input is not valid E-mail!"
-              },
-              {
-                required: true,
-                message: "Please input your E-mail!"
-              }
-            ]
-          })(<Input />)}
-        </FormItem>
-        <FormItem label={labels.formTranscriptionField[language]}>
-          {getFieldDecorator("transcription", {
-            initialValue: transcription,
-            rules: [
-              {
-                type: "text",
-                message: "The input is not valid E-mail!"
-              },
-              {
-                required: true,
-                message: "Please input your E-mail!"
-              }
-            ]
-          })(<Input />)}
-        </FormItem>
+      <form>
+        <b>{labels.formTermField[language]}</b>
+        <Input style={{ margin: '10px 0' }} value={term}/>
+        <b>{labels.formTranscriptionField[language]}</b>
+        <Input style={{ margin: '10px 0' }} value={transcription} />
+        <b>{labels.formTranslationsBlock[language]}</b>
+        <Row>
+          <TranslationsList id={id} translations={translation} handleClick={this.handleClick} />
+        </Row>
+        <b>{labels.formExamplesBlock[language]}</b>
         <Row>
           <ExamplesList id={id} exampleId={example.index} examples={examples} handleClick={this.handleClick} />
           <AddExampleForm example={example} labels={labels} language={language} languages={languages} handleUpdate={this.handleExamplesUpdate} />
         </Row>
-      </Form>
+      </form>
     );
   }
 }
@@ -154,6 +134,4 @@ const mapStateToProps = state => ({
 //     login
 //   }, dispatch);
 
-const EditArticle = Form.create({})(EditArticleForm);
-
-export default connect(mapStateToProps, null)(EditArticle);
+export default connect(mapStateToProps, null)(EditArticleForm);
