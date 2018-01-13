@@ -20,8 +20,8 @@ export const createArticle = (article) => {
         .then(csrf => {
           csrf.Article = {...article};
           const body = JSON.stringify(csrf);    
-          fetch("/api/article", {
-            method: "CREATE",
+          fetch("/api/articles", {
+            method: "POST",
             accept: "application/json",
             credentials: "include",
             headers: {
@@ -74,8 +74,8 @@ export const createArticle = (article) => {
         .then(csrf => {
           csrf.Article = {...article};
           const body = JSON.stringify(csrf);    
-          fetch("/api/article", {
-            method: "UPDATE",
+          fetch("/api/articles", {
+            method: "PUT",
             accept: "application/json",
             credentials: "include",
             headers: {
