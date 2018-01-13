@@ -36,6 +36,28 @@ module.exports = {
           return reject(error);
         });
     });
+  },
+  createArticle: (article) => {
+    return new Promise((resolve, reject) => {
+      Article.create(article)
+        .then(result => {
+          return resolve(result);
+        })
+        .catch(error => {
+          return reject(error);
+        });
+    });
+  },
+  updateArticle: (article, id) => {
+    return new Promise((resolve, reject) => {
+      Article.update(id, article)
+        .then(result => {
+          return resolve(result);
+        })
+        .catch(error => {
+          return reject(error);
+        });
+    });
   }
 };
 
