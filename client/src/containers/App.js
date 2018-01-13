@@ -64,14 +64,15 @@ class App extends Component {
     const { currentPage, dataSource, num, searchString } = this.state;
     const { appLoaded, fetching, labels, language, location, loggedIn } = this.props;
     const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+    const url = location.pathname.split('/');
     if (appLoaded) {
       if (loggedIn) {
-        if (location.pathname === '/login') {
+        if (url[1] === 'login') {
           /* authorized users has not access to /login */
           return <Redirect to='/' />;
         }
       } else {
-        if (location.pathname !== '/' && location.pathname !== '/login') {
+        if (location.pathname !== '/' && url[1] !== 'login') {
           /* guests has access only to / and /login */
           return <Redirect to='/login' />;
         }
@@ -88,7 +89,8 @@ class App extends Component {
         { appLoaded ?
           <Aux>
             <Navigation />
-            <SearchBlock searchString={searchString} handleChange={this.handleChange} />
+            { url[1] !== 'login' && url[1] !== 'edit'  ?
+              <SearchBlock searchString={searchString} handleChange={this.handleChange} /> : null }
             <Switch>
               <Route exact path="/login" component={Login}/>
               <Route exact path="/edit/:id" render={(props) => <EditArticle {...props} />} />
