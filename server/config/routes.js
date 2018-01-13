@@ -34,6 +34,8 @@ module.exports.routes = {
   "POST /api/state": "StateController.getState",
   "POST /api/login": "AuthController.login",
   "POST /api/logout": "AuthController.logout",
+  "POST /api/articles": "ArticleController.create",
+  "PUT /api/articles": "ArticleController.update",
   "GET /": { view: "homepage" }
 
   /***************************************************************************
