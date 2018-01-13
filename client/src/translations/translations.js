@@ -59,39 +59,49 @@ export const labels = {
     ru: 'Примеры',
     eo: 'Ekzemploj',
   },
-  formAddExampleButton: {
+  formAddElementButton: {
     cv: 'Добавить',
     ru: 'Добавить',
     eo: 'Aldoni',
   },
-  formSaveExampleButton: {
+  formSaveElementButton: {
     cv: 'Сохранить',
     ru: 'Сохранить',
     eo: 'Savi',
   },
-  formAddExampleError: {
-    cv: 'Необходимо заполниить все поля',
-    ru: 'Необходимо заполниить все поля',
-    eo: 'Indas pleni ĉiun kampon',
+  formFirstStepError: {
+    cv: 'Необходимо заполнить поле «Слово»',
+    ru: 'Необходимо заполнить поле «Слово»',
+    eo: 'Vi devas plenigi la kampon «Vorto»',
   },
-  formAddExampleNew: {
-    cv: 'Ҫӗнӗ пример',
-    ru: 'Новый пример',
-    eo: 'Nova ekzemplo',
+  formAddElementError: {
+    cv: 'Необходимо заполнить все поля',
+    ru: 'Необходимо заполнить все поля',
+    eo: 'Vi devas plenigi ĉiun kampon',
   },
-  EditFormStepOne: {
+  editFormStepOne: {
     cv: 'Пӗрре',
     ru: 'Один',
     eo: 'Unu',
   },
-  EditFormStepTwo: {
+  editFormStepTwo: {
     cv: 'Иккӗ',
     ru: 'Два',
     eo: 'Du',
   },
-  EditFormStepThree: {
+  editFormStepThree: {
     cv: 'Виҫҫӗ',
     ru: 'Три',
     eo: 'Tri',
+  },
+  examplesListEmpty: {
+    cv: 'Примеры отсутствуют...',
+    ru: 'Примеры отсутствуют...',
+    eo: 'Exemploj ne estas...',
+  },
+  translationsListEmpty: {
+    cv: 'Переводы отсутствуют...',
+    ru: 'Переводы отсутствуют...',
+    eo: 'Tradukoj ne estas...',
   }
 };
