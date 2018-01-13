@@ -44,6 +44,11 @@ export const labels = {
     ru: 'Траскрипция',
     eo: 'Vorto',
   },
+  formAudioField: {
+    cv: 'Аудио',
+    ru: 'Аудио',
+    eo: 'Auxdajxo',
+  },
   formTranslationsBlock: {
     cv: 'Перевод',
     ru: 'Перевод',
@@ -73,5 +78,20 @@ export const labels = {
     cv: 'Ҫӗнӗ пример',
     ru: 'Новый пример',
     eo: 'Nova ekzemplo',
+  },
+  EditFormStepOne: {
+    cv: 'Пӗрре',
+    ru: 'Один',
+    eo: 'Unu',
+  },
+  EditFormStepTwo: {
+    cv: 'Иккӗ',
+    ru: 'Два',
+    eo: 'Du',
+  },
+  EditFormStepThree: {
+    cv: 'Виҫҫӗ',
+    ru: 'Три',
+    eo: 'Tri',
   }
 };
