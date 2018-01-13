@@ -1,7 +1,8 @@
 import React from "react";
-import { func, object, string } from "prop-types";
-import { Row } from "antd";
+import { array, func, object, string } from "prop-types";
+import { Button, Row } from "antd";
 import { TranslationsList } from "./TranslationsList";
+import { Form } from "./Form";
 
 export const StepTwo = ({
   handleChangeElement,
@@ -9,17 +10,40 @@ export const StepTwo = ({
   id,
   labels,
   language,
-  translation
+  translation,
+  translations,
+  translationLanguages
 }) => {
   return (
     <div className="steps-content">
-      <b>{labels.formTranslationsBlock[language]}</b>
+      <div style={{marginBottom: '10px'}}>
+        <b>{labels.formTranslationsBlock[language]}</b>
+        <Button
+          style={{ marginLeft: "5px" }}
+          shape="circle"
+          icon="plus"
+          size="small"
+          onClick={() => handleChangeElement("addTranslation", null, null)}
+        />
+      </div>
       <Row>
         <TranslationsList
-          id={id}
-          translations={translation}
           handleChangeElement={handleChangeElement}
+          id={id}
+          labels={labels}
+          language={language}
+          translations={translations}
         />
+        {translationLanguages.length || (!translationLanguages.length && translation.index !== null && translation.lang !== null) ? (
+          <Form
+            data={translation}
+            handleUpdate={handleUpdate}
+            labels={labels}
+            language={language}
+            languages={translationLanguages}
+            type="translation"
+          />
+        ) : null}
       </Row>
     </div>
   );
@@ -31,5 +55,7 @@ StepTwo.propTypes = {
   id: string,
   labels: object.isRequired,
   language: string.isRequired,
-  translation: object
+  translation: object,
+  translations: object,
+  translationLanguages: array.isRequired
 };

@@ -1,37 +1,39 @@
 import React, { Component } from "react";
-import { array, bool, object, string } from "prop-types";
+import { array, bool, func, object, string } from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Steps } from "antd";
+import { createArticle, updateArticle } from '../../redux/actions/article';
 import { StepOne } from "./StepOne";
 import { StepTwo } from "./StepTwo";
 import { StepThree } from "./StepThree";
 import { Actions } from "./Actions";
 
 const Step = Steps.Step;
+const empty = { index: null, lang: null, text: null };
 
 class EditArticleForm extends Component {
   state = {
     audio: "",
+    error: null,
     id: "",
     current: 0,
-    example: {
-      index: null,
-      lang: null,
-      text: null
-    },
+    example: { ...empty },
     examples: [],
     term: "",
-    transcription: "",
-    translation: {}
+    transcriptions: "",
+    translation: { ...empty },
+    translations: {}
   };
 
   static propTypes = {
-    rawData: array.isRequired,
+    createArticle: func.isRequired,
     labels: object.isRequired,
     language: string.isRequired,
     languages: array.isRequired,
-    loggedIn: bool.isRequired
+    loggedIn: bool.isRequired,
+    rawData: array.isRequired,
+    updateArticle: func.isRequired,
   };
 
   componentWillMount() {
@@ -40,11 +42,18 @@ class EditArticleForm extends Component {
       return id === item.id;
     });
     if (article) {
+      /* translation can be string of russian text or object with { lang: translation } properties */
+      let translations;
+      if (typeof article[0].translation === "string") {
+        translations = { ru: article[0].translation };
+      } else {
+        translations = { ...article[0].translation };
+      }
       this.setState({
         id,
         term: article[0].term,
         transcription: article[0].transcription,
-        translation: article[0].translation,
+        translations: translations,
         audio: article[0].audio,
         examples: article[0].examples
       });
@@ -53,11 +62,34 @@ class EditArticleForm extends Component {
 
   next = () => {
     const current = this.state.current + 1;
-    this.setState({ current });
-  }
+    if (current === 1 && !this.state.term) {
+      this.setState({
+        error: this.props.labels.formFirstStepError[this.props.language]
+      });
+    } else {
+      this.setState({ current, error: null });
+    }
+  };
+
   prev = () => {
     const current = this.state.current - 1;
     this.setState({ current });
+  };
+
+  done = () => {
+    const article = {
+      id: this.state.id ? this.state.id : null,
+      term: this.state.term,
+      transcription: this.state.transcription,
+      translation: this.state.translations,
+      examples: this.state.examples,
+      audio: this.state.audio,
+    };
+    if (this.state.id) {
+      this.props.updateArticle(article);
+    } else {
+      this.props.createArticle(article);
+    }
   }
 
   /**
@@ -70,23 +102,30 @@ class EditArticleForm extends Component {
   };
 
   /**
-   * @param {Object} example
+   * @param {Object} data
+   * @param {string} data
    */
-  handleUpdate = example => {
-    let examples = this.state.examples.map((item, index) => {
-      let newItem;
-      if (index.toString() === example.index) {
-        newItem = { ...item };
-        newItem[example.lang] = example.text;
-      } else {
-        newItem = { ...item };
+  handleUpdate = (data, key) => {
+    if (key === "example") {
+      const examples = this.state.examples.map((item, index) => {
+        let newItem;
+        if (data.index !== null && index.toString() === data.index.toString()) {
+          newItem = { ...item };
+          newItem[data.lang] = data.text;
+        } else {
+          newItem = { ...item };
+        }
+        return newItem;
+      });
+      if (!data.index) {
+        examples.push({ [data.lang]: data.text });
       }
-      return newItem;
-    });
-    if (!example.index) {
-      examples.push({ [example.lang]: example.text });
+      this.setState({ example: { ...empty }, examples });
+    } else if (key === "translation") {
+      let translations = { ...this.state.translations };
+      translations[data.lang] = data.text;
+      this.setState({ translation: { ...empty }, translations });
     }
-    this.setState({ examples });
   };
 
   /**
@@ -95,34 +134,79 @@ class EditArticleForm extends Component {
    * @param {string} lang
    */
   handleChangeElement = (action, num, lang) => {
-    let example = { index: null, lang: null, text: null };
+    let example = { ...empty };
+    let translation = { ...empty };
     switch (action) {
-      case "add":
-        example = {
-          index: num.toString(),
-          lang: null,
-          text: null
-        };
+      case "addExample": {
+        this.setState({ example });
         break;
-      case "edit":
+      }
+      case "editExample": {
         example = {
           index: num.toString(),
-          lang: lang,
+          lang,
           text: this.state.examples[num][lang]
         };
+        this.setState({ example });
         break;
-      case "new":
+      }
+      case "deleteExample": {
+        if (this.state.examples.length) {
+          const examples = this.state.examples.filter((item, i) => {
+            return i !== num;
+          });
+          this.setState({ examples });
+        }
+        break;
+      }
+      case "addExampleElement": {
+        example.index = num.toString();
+        this.setState({ example });
+        break;
+      }
+      case "editExampleElement": {
         example = {
-          index: null,
-          lang: lang,
-          text: null
+          index: num.toString(),
+          lang,
+          text: this.state.examples[num][lang]
         };
+        this.setState({ example });
         break;
-      case "delete":
+      }
+      case "deleteExampleElement": {
+        if (this.state.examples.length) {
+          const examples = this.state.examples.map((item, i) => {
+            if (i === num) {
+              const newItem = { ...item };
+              delete newItem[lang];
+              return newItem;
+            } else {
+              return { ...item };
+            }
+          });
+          this.setState({ examples });
+        }
         break;
+      }
+      case "addTranslation": {
+        this.setState({ translation });
+        break;
+      }
+      case "editTraslation": {
+        translation.index = 0;
+        translation.lang = lang; 
+        translation.text = this.state.translations[lang];
+        this.setState({ translation });
+        break;
+      }
+      case "deleteTranslation": {
+        let translations = { ...this.state.translations };
+        delete translations[lang];
+        this.setState({ translations });
+        break;
+      }
       default:
     }
-    this.setState({ example });
   };
 
   render() {
@@ -130,20 +214,36 @@ class EditArticleForm extends Component {
       audio,
       id,
       current,
+      error,
       example,
       examples,
       term,
       translation,
+      translations,
       transcription
     } = this.state;
     const { labels, language, languages } = this.props;
-    let example_languages = [];
+    let translationLanguages = [];
+    let exampleLanguages = [];
+    if (languages.length) {
+      translationLanguages = languages.filter(item => {
+        return !translations.hasOwnProperty(item) && item !== "cv";
+      });
+      if (example.index !== null && examples.length) {
+        exampleLanguages = languages.filter(item => {
+          return !examples[example.index].hasOwnProperty(item);
+        });
+      } else {
+        exampleLanguages = ["cv"];
+      }
+    }
     const steps = [
       {
-        title: labels.EditFormStepOne[language],
+        title: labels.editFormStepOne[language],
         content: (
           <StepOne
             audio={audio}
+            error={error}
             handleChange={this.handleChange}
             labels={labels}
             language={language}
@@ -153,7 +253,7 @@ class EditArticleForm extends Component {
         )
       },
       {
-        title: labels.EditFormStepTwo[language],
+        title: labels.editFormStepTwo[language],
         content: (
           <StepTwo
             handleChangeElement={this.handleChangeElement}
@@ -162,43 +262,41 @@ class EditArticleForm extends Component {
             labels={labels}
             language={language}
             translation={translation}
+            translations={translations}
+            translationLanguages={translationLanguages}
           />
         )
       },
       {
-        title: labels.EditFormStepThree[language],
+        title: labels.editFormStepThree[language],
         content: (
           <StepThree
             example={example}
-            example_languages={example_languages}
+            exampleLanguages={exampleLanguages}
             examples={examples}
             handleChangeElement={this.handleChangeElement}
             handleUpdate={this.handleUpdate}
             id={id}
             labels={labels}
             language={language}
-            languages={languages}
           />
         )
       }
     ];
-    if (languages.length) {
-      if (example.index) {
-        example_languages = languages.filter(item => {
-          return item !== examples[example.index][item];
-        });
-      } else {
-        example_languages = [...languages];
-      }
-    }
     return (
-      <form>
-        <Steps style={{ marginTop: '20px' }} current={current}>
+      <div>
+        <Steps style={{ marginTop: "20px" }} current={current}>
           {steps.map(item => <Step key={item.title} title={item.title} />)}
         </Steps>
-        <Actions current={current} next={this.next} prev={this.prev} total={steps.length} />
+        <Actions
+          current={current}
+          next={this.next}
+          prev={this.prev}
+          done={this.done}
+          total={steps.length}
+        />
         {steps[current].content}
-      </form>
+      </div>
     );
   }
 }
@@ -211,8 +309,9 @@ const mapStateToProps = state => ({
   loggedIn: state.auth.loggedIn
 });
 
-//   const mapDispatchToProps = dispatch => bindActionCreators({
-//     login
-//   }, dispatch);
+  const mapDispatchToProps = dispatch => bindActionCreators({
+    createArticle,
+    updateArticle,
+  }, dispatch);
 
-export default connect(mapStateToProps, null)(EditArticleForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditArticleForm);

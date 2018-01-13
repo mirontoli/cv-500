@@ -4,7 +4,7 @@ import { Alert, Col, Button, Input, Select } from "antd";
 
 const Option = Select.Option;
 
-export class AddExampleForm extends Component {
+export class Form extends Component {
   state = {
     index: null,
     lang: null,
@@ -12,26 +12,27 @@ export class AddExampleForm extends Component {
     error: false
   };
   static propTypes = {
-    example: object.isRequired,
+    data: object,
+    handleUpdate: func.isRequired,
     labels: object.isRequired,
     language: string.isRequired,
     languages: array.isRequired,
-    handleUpdate: func.isRequired
+    type: string.isRequired
   };
 
   componentWillMount() {
     this.setState({
-      index: this.props.example.index,
-      lang: this.props.example.index ? this.props.example.lang : "cv",
-      text: this.props.example.text
+      index: this.props.data.index,
+      lang: this.props.data.lang,
+      text: this.props.data.text
     });
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      index: nextProps.example.index,
-      lang: nextProps.example.index ? nextProps.example.lang : "cv",
-      text: nextProps.example.text
+      index: nextProps.data.index,
+      lang: nextProps.data.lang,
+      text: nextProps.data.text
     });
   }
 
@@ -41,10 +42,18 @@ export class AddExampleForm extends Component {
 
   render() {
     const { error, index, lang, text } = this.state;
-    const { example, labels, language, languages, handleUpdate } = this.props;
-    console.log(example);
+    const {
+      data,
+      handleUpdate,
+      labels,
+      language,
+      languages,
+      type
+    } = this.props;
+    const disabled = data.index !== null && data.lang !== null ? true : false;
+    let buttonTitle = !disabled ? labels.formAddElementButton[language] : labels.formSaveElementButton[language];
     let options = [];
-    if (languages.length) {
+    if (languages.length) {      
       options = languages.map(item => {
         return (
           <Option key={"option-" + item} value={item}>
@@ -52,16 +61,21 @@ export class AddExampleForm extends Component {
           </Option>
         );
       });
+    } else if (!languages.length && data.index !== null && data.lang) {
+      options.push(
+        <Option key={"option-" + data.lang} value={data.lang}>
+          {data.lang}
+        </Option>
+      );
     }
-
     return (
       <Col span={12}>
         {options.length ? (
           <Select
-            style={{ marginBottom: "5px" }}
+            style={{ marginBottom: "5px", width: "100%" }}
+            disabled={disabled}
             value={lang}
             onChange={this.handleChange}
-            disabled={index ? false : true}
           >
             {options}
           </Select>
@@ -75,18 +89,19 @@ export class AddExampleForm extends Component {
         />
         <Button
           onClick={() => {
-            if (lang !== "-" && text !== "") {
-              handleUpdate({ index, lang, text });
+            if (lang && text) {
+              handleUpdate({ index, lang, text }, type);
             } else {
               this.setState({ error: true });
             }
           }}
         >
-          {labels.formAddExampleButton[language]}
+          {buttonTitle}
         </Button>
         {error ? (
           <Alert
-            message={labels.formAddExampleError[language]}
+            style={{ marginTop: "5px" }}
+            message={labels.formAddElementError[language]}
             type="error"
             showIcon
           />

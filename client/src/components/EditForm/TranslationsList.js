@@ -1,12 +1,18 @@
 import React from "react";
-import { any, func, string } from "prop-types";
+import { func, object, string } from "prop-types";
 import { Button, Card, Col } from "antd";
 
-export const TranslationsList = ({ id, translations, handleChangeElement }) => {
+export const TranslationsList = ({
+  labels,
+  language,
+  translations,
+  handleChangeElement,
+  id
+}) => {
   return (
     <Col span={12}>
       <Card className="exampleCard">
-        {typeof translations === 'object' && Object.keys(translations).length ? (
+        {Object.keys(translations).length ? (
           <ul>
             {Object.keys(translations).map((el, num) => {
               return (
@@ -15,22 +21,35 @@ export const TranslationsList = ({ id, translations, handleChangeElement }) => {
                   <Button
                     style={{ marginLeft: "5px" }}
                     shape="circle"
+                    icon="edit"
+                    size="small"
+                    onClick={() => handleChangeElement("editTraslation", null, el)}
+                  />
+                  <Button
+                    style={{ marginLeft: "5px" }}
+                    shape="circle"
                     icon="minus-circle-o"
                     size="small"
-                    onClick={() => handleChangeElement("delete", null, el)}
+                    onClick={() =>
+                      handleChangeElement("deleteTranslation", null, el)
+                    }
                   />
                 </li>
               );
             })}
           </ul>
-        ) : translations}
+        ) : (
+          <i>{labels.translationsListEmpty[language]}</i>
+        )}
       </Card>
     </Col>
   );
 };
 
 TranslationsList.propTypes = {
+  labels: object.isRequired,
+  language: string.isRequired,
+  handleChangeElement: func.isRequired,
   id: string.isRequired,
-  translations: any.isRequired,
-  handleChangeElement: func.isRequired
+  translations: object.isRequired
 };

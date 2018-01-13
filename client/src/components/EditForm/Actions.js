@@ -1,8 +1,8 @@
 import React from "react";
 import { func, number } from "prop-types";
-import { Button, message } from "antd";
+import { Button } from "antd";
 
-export const Actions = ({ current, next, prev, total }) => {
+export const Actions = ({ current, done, next, prev, total }) => {
   return (
     <div className="step-actions">
       {current > 0 && (
@@ -23,7 +23,7 @@ export const Actions = ({ current, next, prev, total }) => {
         <Button
           style={{ float: "right" }}
           type="primary"
-          onClick={() => message.success("Processing complete!")}
+          onClick={() => done()}
         >
           Done
         </Button>
@@ -34,6 +34,7 @@ export const Actions = ({ current, next, prev, total }) => {
 
 Actions.propTypes = {
   current: number.isRequired,
+  done: func.isRequired,
   next: func.isRequired,
   prev: func.isRequired,
   total: number.isRequired
