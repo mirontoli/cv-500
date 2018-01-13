@@ -10,7 +10,7 @@ import { SearchBlock } from '../components/SearchBlock';
 import { ItemList } from '../components/ItemList';
 import Login from '../components/Login';
 import { Footer } from '../components/Footer';
-import EditArticle from '../components/EditArticle';
+import EditArticle from '../components/EditForm/EditArticle';
 import { Aux, filterListData } from '../utils/utils';
 
 class App extends Component {
