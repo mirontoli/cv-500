@@ -1,4 +1,4 @@
-#Backend for dictionary, a [Sails](http://sailsjs.org) application.
+# Backend for dictionary, a [Sails](http://sailsjs.org) application.
 
 ### Install sails globally
 ```
