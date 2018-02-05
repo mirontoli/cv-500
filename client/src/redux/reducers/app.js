@@ -14,7 +14,7 @@ import {
     fetching: false,
     labels: labels,
     language: 'ru',
-    languages: ['cv', 'ru', 'eo'],
+    languages: ['cv', 'ru', 'eo', 'sv'],
     loggedIn: false,
     rawData: [],
     user: {},
