@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { bool, func, object, string } from "prop-types";
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { push } from "react-router-redux";
 import { Link } from "react-router-dom";
 import { Col, Menu, Row } from "antd";
 import { changeAppLanguage } from "../redux/actions/app";
-import { logout } from '../redux/actions/auth';
+import { logout } from "../redux/actions/auth";
 
 export class Navigation extends Component {
   state = {
@@ -19,7 +19,7 @@ export class Navigation extends Component {
     labels: object.isRequired,
     language: string.isRequired,
     loggedIn: bool.isRequired,
-    user: object.isRequired,
+    user: object.isRequired
   };
 
   handleClick = e => {
@@ -53,6 +53,15 @@ export class Navigation extends Component {
             defaultSelectedKeys={["2"]}
             onClick={this.handleClick}
           >
+            {!loggedIn ? (
+              <Menu.Item key="login">
+                {labels.menuLoginButton[language]}
+              </Menu.Item>
+            ) : (
+              <Menu.Item key="logout">
+                {labels.menuLogoutButton[language]}
+              </Menu.Item>
+            )}
             <Menu.Item key="language">
               <img
                 className="lang-switcher"
@@ -60,9 +69,6 @@ export class Navigation extends Component {
                 alt={language}
               />
             </Menu.Item>
-            { !loggedIn ? 
-              <Menu.Item key="login">{labels.menuLoginButton[language]}</Menu.Item> : 
-              <Menu.Item key="logout">{labels.menuLogoutButton[language]}</Menu.Item> }
           </Menu>
         </Col>
       </Row>
@@ -71,19 +77,20 @@ export class Navigation extends Component {
 }
 
 const mapStateToProps = state => ({
-  labels: state.app.labels,
+  labels: state.app.labels.navigation,
   language: state.app.language,
   loggedIn: state.app.loggedIn,
-  user: state.app.user,
+  user: state.app.user
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  changeAppLanguage,
-  goTo: (route) => push(route),
-  logout,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      changeAppLanguage,
+      goTo: route => push(route),
+      logout
+    },
+    dispatch
+  );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Navigation);
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

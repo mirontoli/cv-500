@@ -61,7 +61,7 @@ class LoginForm extends React.Component {
 
 const mapStateToProps = state => ({
   fetching: state.auth.fetching,
-  labels: state.app.labels,
+  labels: state.app.labels.login,
   language: state.app.language,
   loggedIn: state.auth.loggedIn,
   error: state.auth.error

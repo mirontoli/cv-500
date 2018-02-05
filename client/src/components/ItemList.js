@@ -1,11 +1,11 @@
 import React from "react";
-import { array, bool, object } from 'prop-types';
+import { array, bool, object } from "prop-types";
 import { Link } from "react-router-dom";
 import { Button, Icon, List } from "antd";
 import { Aux } from "../utils/utils";
 
 const IconText = ({ id, type, text }) => (
-  <Link to={'/edit/' + id}>
+  <Link to={"/edit/" + id}>
     <Icon type={type} style={{ marginRight: 8 }} />
     {text}
   </Link>
@@ -24,7 +24,11 @@ export const ItemList = ({ loading, dataSource, pagination, loggedIn }) => {
         renderItem={item => (
           <List.Item
             key={"card-" + item.id}
-            actions={loggedIn ? [<IconText id={item.id} type="edit" text="Редактировать"></IconText>] : []}
+            actions={
+              loggedIn
+                ? [<IconText id={item.id} type="edit" text="Редактировать" />]
+                : []
+            }
           >
             <List.Item.Meta
               title={
@@ -66,5 +70,5 @@ ItemList.propTypes = {
   loading: bool.isRequired,
   dataSource: array.isRequired,
   pagination: object.isRequired,
-  loggedIn: bool.isRequired,
+  loggedIn: bool.isRequired
 };

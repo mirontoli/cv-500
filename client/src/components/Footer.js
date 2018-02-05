@@ -1,5 +1,9 @@
-import React from 'react';
+import React from "react";
 
-export const Footer = ({text, date}) => (
-  <footer className="footer"><p>© { text } { date }</p></footer>
-)
+export const Footer = ({ text, date }) => (
+  <footer className="footer">
+    <p>
+      © {text} {date}
+    </p>
+  </footer>
+);
