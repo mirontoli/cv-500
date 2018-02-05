@@ -2,22 +2,29 @@
 
 ## Installation
 ### server
+```
 sudo npm i -g sails
 cd server
 npm i
+```
 
 ### client
+```
 cd client
 npm i
+```
 
 
 ## Start development server
-
+```
 cd server; sails lift
 cd ../client; npm run start
+```
 
 ## Building project
+```
 npm run build
+```
 
 ## Local database
 Make sure you use the latest [MongoDB 3.6](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/) 
