@@ -28,11 +28,12 @@ sudo systemctl enable mongodb
 sudo systemctl start mongodb
 ```
 
+
 ## Import database
 unpack as
 dump/files
 
-then:
+then :
 ```
 mongorestore --db cv500
-```
+``` 
